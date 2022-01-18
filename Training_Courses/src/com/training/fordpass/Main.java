@@ -21,6 +21,22 @@ public class Main {
 
        System.out.println(result3);
        System.out.println(result4);
+
+       float floatVal = 1.0f;
+       double doubleVal = 4.0d;
+       byte byteVal = 7;
+       short shortVal = 7;
+       long longVal = 5;
+
+       short result5 = (short) longVal;
+       short result6 = (short) (byteVal - longVal);
+       float result7 = longVal - floatVal;
+
+
+       System.out.println(result5);
+       System.out.println(result6);
+       System.out.println(result7);
+       System.out.println("Success");
     }
 
 }
