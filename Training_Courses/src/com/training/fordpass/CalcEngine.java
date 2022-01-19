@@ -51,4 +51,24 @@ public class CalcEngine {
         }
         return result;
     }
+
+    static char opCodeFromString(String operartionName) {
+        char opCode = operartionName.charAt(0);
+        return opCode;
+    }
+
+    double valueFromWord(String word) {
+        String[] numberWords = {
+            "zero", "one", "two", "three", "four",
+            "five", "six", "seven", "eight", "nine"
+        };
+        double value = 0d;
+        for(int index = 0; index < numberWords.length; index++){
+            if(word.equals(numberWords[index])) {
+                value = index;
+                break;
+            }
+        }
+        return value;
+    }
 }
