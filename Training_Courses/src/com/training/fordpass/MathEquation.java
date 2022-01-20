@@ -6,6 +6,9 @@ public class MathEquation {
     private char opCode;
     private double result;
 
+    private static int numberOfCalculations;
+    private static double sumOfResults;
+
 
     public MathEquation(char opCode) {
         this.opCode = opCode;
@@ -36,6 +39,13 @@ public class MathEquation {
                 result = 0.0d;
                 break;
         }
+
+        numberOfCalculations++;
+        sumOfResults += result;
+    }
+
+    public static double getAverageResult() {
+        return sumOfResults / numberOfCalculations;
     }
 
     public double getLeftVal() { return leftVal;}
