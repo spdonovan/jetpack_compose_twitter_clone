@@ -1,20 +1,39 @@
 package com.training.fordpass;
 
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class CalcEngine {
 
     public static void main(String[] args) {
-        //performCalculations();
-        Divider divider = new Divider();
-        doCalculation(divider, 100.0d, 50.0d);
+        executeInteractively();
+//        Divider divider = new Divider();
+//        doCalculation(divider, 100.0d, 50.0d);
+//
+//        Adder adder = new Adder();
+//        doCalculation(adder, 25.0d, 92.0d);
 
-        Adder adder = new Adder();
-        doCalculation(adder, 25.0d, 92.0d);
+        //performMoreCalculations();
 
-        performMoreCalculations();
-
+    }
+    private static CalculateBase createCalculation(MathOperation operation, double leftVal, double rightVal) {
+     CalculateBase calculation = null;
+     switch(operation) {
+         case ADD:
+             calculation = new Adder(leftVal, rightVal);
+             break;
+         case SUBTRACT:
+             calculation = new Subtracter(leftVal, rightVal);
+             break;
+         case MULTIPLY:
+             calculation = new Multiplier(leftVal, rightVal);
+             break;
+         case DIVIDE:
+             calculation = new Divider(leftVal, rightVal);
+             break;
+     }
+     return calculation;
     }
 
     private static void performMoreCalculations() {
@@ -75,40 +94,6 @@ public class CalcEngine {
 
 
 
-
-//        if (args.length == 0) {
-//            for (int i = 0; i < opCodes.length; i++) {
-//                results[i] = execute(opCodes[i], leftVals[i], rightVals[i]);
-//            }
-//
-//            for (double currentResult : results)
-//                System.out.println(currentResult);
-//        }   else if(args.length == 1 && args[0].equals("interactive"))
-//            executeInteractively();
-//        else if(args.length == 3)
-//            handleCommandLine(args);
-//        else
-//            System.out.println("Please provide an operation code and 2 numeric values");
-//            Scanner scanner = new Scanner(System.in);
-//            String userInput = scanner.nextLine();
-//            String[] parts = userInput.split(" ");
-//            performOperation(parts);
-//    }
-
-
-
-//    private static void performOperation(String[] parts) {
-//        char opCode = opCodeFromString(parts[0]);
-//        if (opCode == 'w')
-//            handleWhen(parts);
-//        else {
-//            double leftVal = valueFromWord(parts[1]);
-//            double rightVal = valueFromWord(parts[2]);
-//            double result = execute(opCode, leftVal, rightVal);
-//            displayResult(opCode, leftVal, rightVal, result);
-//        }
-// }
-
     private static void handleWhen(String[] parts) {
         LocalDate startDate = LocalDate.parse(parts[1]);
         long daysToAdd = (long) valueFromWord(parts[2]);
@@ -138,15 +123,21 @@ public class CalcEngine {
 
     static void executeInteractively() {
         System.out.println("Enter an operation and 2 numbers:");
+        Scanner scanner = new Scanner(System.in);
+        String userInput = scanner.nextLine();
+        String[] parts = userInput.split(" ");
+        performOperation(parts);
     }
 
-//    private static void handleCommandLine(String[] args) {
-//        char opCode = args[0].charAt(0);
-//        double leftVal = Double.parseDouble(args[1]);
-//        double rightVal = Double.parseDouble(args[2]);
-//        double result = execute(opCode, leftVal, rightVal);
-//        System.out.println(result);
-//    }
+    private static void performOperation(String[] parts) {
+     MathOperation operation = MathOperation.valueOf(parts[0].toUpperCase());
+     double leftVal = Double.parseDouble(parts[1]);
+     double rightVal = Double.parseDouble(parts[2]);
+     CalculateBase calculation = createCalculation(operation, leftVal, rightVal);
+     calculation.calculate();
+     System.out.println("Operation performed: " + operation);
+     System.out.println(calculation.getResult());
+    }
 
 
     static char opCodeFromString(String operartionName) {
