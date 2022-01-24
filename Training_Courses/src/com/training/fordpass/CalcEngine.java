@@ -7,16 +7,21 @@ import java.util.Scanner;
 public class CalcEngine {
 
     public static void main(String[] args) {
-        executeInteractively();
-//        Divider divider = new Divider();
-//        doCalculation(divider, 100.0d, 50.0d);
-//
-//        Adder adder = new Adder();
-//        doCalculation(adder, 25.0d, 92.0d);
-
-        //performMoreCalculations();
-
+    dynamicInteractivity();
     }
+
+    private static void dynamicInteractivity() {
+        DynamicHelper helper = new DynamicHelper(new MathProcessing[] {
+                new Adder(),
+                new PowerOf()
+        });
+        System.out.println("Enter an operation and two numbers");
+        Scanner scanner = new Scanner(System.in);
+        String userInput = scanner.nextLine();
+
+        helper.process(userInput);
+    }
+
     private static CalculateBase createCalculation(MathOperation operation, double leftVal, double rightVal) {
      CalculateBase calculation = null;
      switch(operation) {
